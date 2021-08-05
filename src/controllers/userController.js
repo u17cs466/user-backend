@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 const getAllUser = async (req, res) => {
-  let data = await User.find();
+  let data = await User.find().populate('ProfileImage');
   res.status(200).json({
     status: 'success',
     data: data,
