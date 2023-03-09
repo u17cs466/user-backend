@@ -9,8 +9,8 @@ const getAllUser = async (req, res) => {
 };
 const createUser = async (req, res) => {
   try {
-    const { name, userName, password, confirmPassword, zipCode, ProfileImage } = req.body
-    let data = await User.create({ name, userName, password, confirmPassword, ProfileImage, zipCode });
+    const { name, userName, email, password, confirmPassword, zipCode, ProfileImage } = req.body
+    let data = await User.create({ name, userName, email, password, confirmPassword, ProfileImage, zipCode });
     res.status(201).json({
       status: 'success',
       data: data,

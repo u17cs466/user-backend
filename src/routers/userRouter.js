@@ -10,7 +10,7 @@ router.route('/')
 router
   .route('/:id')
   .get(userController.getOneUser)
-  
 
-  
+
+
 module.exports = router;
