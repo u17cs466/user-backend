@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
+const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
 
@@ -18,6 +18,20 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: [true, 'email must be required also it must be unique']
 
+    },
+    age: {
+        type: Number,
+        min: [18, 'Age should be at least 18 years'],
+        required: [true, "age field can't be empty"]
+    },
+
+    gender: {
+        type: String,
+        enum: ["Male", "Female", "Other"],
+        default: "Other"
+    },
+    hobby: {
+        type: [String]   //an array of string
     },
 
     password: {
@@ -45,7 +59,18 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'image'
     }
-})
+
+},
+    {
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true }
+
+    })
+userSchema.pre('save', async function (next) {
+    this.password = await bcrypt.hash(this.password, 10);
+    this.confirmPassword = undefined;
+    next();
+});
 
 const User = mongoose.model('User', userSchema)
 

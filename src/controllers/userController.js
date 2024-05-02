@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/usermodel');
 
 const getAllUser = async (req, res) => {
   let data = await User.find().populate('ProfileImage');

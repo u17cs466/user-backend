@@ -15,6 +15,7 @@ app.use('/images', express.static(imagesDir))
 app.use(express.json())
 app.use(morgan('dev'))
 
+
 app.get('/', (req, res) => {
     res.send('hallo hai server is started')
 })
