@@ -12,7 +12,10 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: [true, 'username must be required also it must be unique']
     },
-
+    phone: {
+        type: Number,
+        required: [true, 'phone number is required']
+    },
     email: {
         type: String,
         unique: true,
@@ -55,10 +58,7 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    ProfileImage: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'image'
-    }
+    ProfileImage: [{ type: mongoose.Schema.Types.ObjectId, ref: 'image' }]
 
 },
     {

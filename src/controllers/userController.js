@@ -1,7 +1,7 @@
 const User = require('../models/usermodel');
 
 const getAllUser = async (req, res) => {
-  let data = await User.find().populate('ProfileImage');
+  let data = await User.find().populate('profileimage');
   res.status(200).json({
     status: 'success',
     data: data,
@@ -36,7 +36,36 @@ const getOneUser = async (req, res) => {
     });
   }
 };
+const updateUser = async (req, res) => {
+  try {
+
+    let data = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.status(203).json({
+      status: 'success',
+      data: data
+    })
+  } catch (err) {
+    res.status(500).json({
+      status: 'success',
+      data: err.message
+    })
+  }
+}
+const deleteUser = async (req, res) => {
+  try {
+    let data = await User.findByIdAndDelete(req.params.id)
+    res.status(200).json({
+      status: 'success',
+      data: data
+    })
+  } catch (err) {
+    res.status(500).json({
+      status: 'success',
+      data: err.message
+    })
+  }
+}
 
 
 
-module.exports = { getAllUser, createUser, getOneUser };
+module.exports = { getAllUser, createUser, getOneUser, updateUser, deleteUser };

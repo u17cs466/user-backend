@@ -3,6 +3,9 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');
+const dotenv = require('dotenv')
+
+dotenv.config({ path: `${__dirname}/config.env` });
 
 
 const secretKey = 'demokey123';
@@ -74,7 +77,6 @@ const login = async (req, res) => {
 const generateOtp = async (req, res) => {
     try {
         const { email } = req.body
-        //console.log(req.body)
         const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
         otps[req.body.email] = {
             otp: otp,
@@ -84,14 +86,15 @@ const generateOtp = async (req, res) => {
             service: "gmail",
             auth: {
                 user: 'srikanth.damacharla99@gmail.com',
-                pass: 'ptoi qfrq azap wwkd'
+                pass: process.env.MAIL_PASS
             }
         });
         const mailOptions = {
             from: 'srikanth.damacharla99@gmail.com',
             to: req.body.email,
             subject: 'OTP for Sign Up',
-            text: `Your OTP for sign up is:-${otp}`
+            text: `Please don't share OTP to any one /n
+                 Your OTP for sign up is:-${otp}`
         };
 
         await transporter.sendMail(mailOptions);
