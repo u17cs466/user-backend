@@ -4,6 +4,7 @@ const cors = require('cors')
 const path = require('path')
 const userRouter = require('./routers/userRouter')
 const filesRouter = require('./routers/fileRouter')
+const postRouter = require("./routers/postRouter")
 
 
 const app = express()
@@ -22,5 +23,6 @@ app.get('/', (req, res) => {
 
 app.use('/api/image', filesRouter)
 app.use("/api/users", userRouter)
+app.use("/api/postes", postRouter)
 
 module.exports = app
