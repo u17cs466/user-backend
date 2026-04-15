@@ -9,14 +9,27 @@ const getAllPosts = async (req, res) => {
 };
 const createPost = async (req, res) => {
     try {
-        const { name, description, type } = req.body
-        let data = await Post.create({ name, description, type });
+        const { name, description, type } = req.body || {};
+
+        if (!name || !description || !type) {
+            return res.status(400).json({
+                status: 'fail',
+                data: 'name, description, and type are required',
+            });
+        }
+
+        let data = await Post.create({
+            name: String(name).trim(),
+            description: String(description).trim(),
+            type: String(type).trim(),
+        });
         res.status(201).json({
             status: 'success',
             data: data,
         });
     } catch (err) {
-        res.status(400).json({
+        const statusCode = err.name === 'ValidationError' ? 400 : 500;
+        res.status(statusCode).json({
             status: 'fail',
             data: err.message,
         });

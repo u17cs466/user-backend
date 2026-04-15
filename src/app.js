@@ -23,6 +23,6 @@ app.get('/', (req, res) => {
 
 app.use('/api/image', filesRouter)
 app.use("/api/users", userRouter)
-app.use("/api/postes", postRouter)
+app.use("/api/posts", postRouter)
 
 module.exports = app
